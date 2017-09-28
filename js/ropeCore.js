@@ -67,7 +67,7 @@ var ropeDemo = {
 
         // grabbing
         //*
-        ropeDemo.context.canvas.onmousemove = function (e) {
+        var grabndrag = function(e) {
             if (e.offsetX) {
                 ropeDemo.context.mouse.x = e.offsetX;
                 ropeDemo.context.mouse.y = e.offsetY;
@@ -75,6 +75,9 @@ var ropeDemo = {
                 ropeDemo.context.mouse.x = e.layerX;
                 ropeDemo.context.mouse.y = e.layerY;
             }
+        }
+        ropeDemo.context.canvas.onmousemove = function (e) {
+            grabndrag(e);
         };
         ropeDemo.context.canvas.onmousedown = function (e) {
             ropeDemo.context.isGrabbing = true;
@@ -83,6 +86,19 @@ var ropeDemo = {
             ropeDemo.context.isGrabbing = false;
         };
         ropeDemo.context.canvas.onmouseout = function (e) {
+            ropeDemo.context.isGrabbing = false;
+        };
+
+        ropeDemo.context.canvas.ontouchmove = function (e) {
+            grabndrag(e);
+        };
+        ropeDemo.context.canvas.ontouchstart = function (e) {
+            ropeDemo.context.isGrabbing = true;
+        };
+        ropeDemo.context.canvas.ontouchend = function (e) {
+            ropeDemo.context.isGrabbing = false;
+        };
+        ropeDemo.context.canvas.ontouchcancel = function (e) {
             ropeDemo.context.isGrabbing = false;
         };
         //*/
