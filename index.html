@@ -14,7 +14,7 @@
 		  transition: background 0.5s ease-in-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
 		  text-rendering: optimizeLegibility;
 		  -webkit-font-smoothing: antialiased;
-		  background: #111;
+		  background: #fff;
 		  font-family:  Helvetica, Arial, 'Lucida Grande', sans-serif;
 
 		}
@@ -22,7 +22,6 @@
 		display: block;
 		width: 100%;
 		min-height: 500px;
-		height: 100%;
 
 		position: fixed;
 		z-index: 5;
@@ -113,60 +112,6 @@
   display: inline-block;
   width: 100%;
 	}
-	.dustFrame{
-		position: absolute;
-		height: 100%;
-		width: 100%;
-		overflow: hidden;
-	}
-	.dust{
-		position: absolute;
-		opacity: 0;
-		width: 100%;
-		height: 300%;
-		margin: 0;
-		z-index: 6;
-		   -webkit-transform: translate3d(0, 0, 0);
-
-	}
-	.dustCloserAnimated{
-		-webkit-animation: dustcloser 120s linear infinite;
- 		-moz-animation:    dustcloser 120s linear infinite;
-	}
-	}
-	.dustCloser{
-		
-		z-index: 7;
-		background: url('dustbig.png');
-	}
-	.dustFarAnimated{
-		-webkit-animation: dustfar 150s linear infinite;
- 		-moz-animation:    dustfar 150s linear infinite;
-	}
-	.dustFar{
-		z-index: 6;
-		background: url('dustsmall.png');
-		
-	}
-
-	@-webkit-keyframes dustcloser {
-	  0%    {  -webkit-transform: translateY(0); }
- 	 100%  { -webkit-transform: translateY(-100%); }
-	}
-	@moz-keyframes dustcloser {
-	  0%    { -webkit-transform: translateY(0); }
-	  100%  { -webkit-transform: translateY(-100%);}
-	}
-
-
-	@-webkit-keyframes dustfar {
-	 0%    { -webkit-transform: translateY(0); }
-	  100%  { -webkit-transform: translateY(-100%);}
-	}
-	@moz-keyframes dustfar {
-	  0%    { -webkit-transform: translateY(0); }
-	  100%  { -webkit-transform: translateY(-100%);}
-	}
 	@import url(http://fonts.googleapis.com/css?family=Open+Sans);
 	@font-face {
 	font-family: 'code_boldregular';
@@ -179,26 +124,41 @@
 	font-style: normal;
 
 }
+
+	.glow {
+		opacity: 0;
+		background-image: radial-gradient(#fff, #fff 30px, #ff6 31px, #ffc 10px,#fff 80%);
+		position: absolute;
+		left: 50%;
+		z-index: 0;
+		height: 400px;
+		width: 400px;
+		border-radius: 100%;
+		margin: 0 0 0 -180px;
+		top: 330px;
+		transition: opacity 100ms;
+	}
+	.shadow {
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 0;
+		z-index: 6;
+		height: 400px;
+		pointer-events: none;
+		background-image: linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0));
+	}
 	</style>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script
+	src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class = 'external wide'>Wide</div>
-	<div class = 'external lenotta'>Lenotta</div>
-	<div class = 'external hack'>Hack</div>
-	<div class = 'external lights'>Toggle Lights!</div>
-	<div class = 'central mainText'>
-		<img class='avatar' src="avatar.png" height='100' width='100'>
-		<h1 class = 'title'>Hullo! My name is Edoardo Odorico.</h1>
-		<h1 class = 'subtitle'>I'm a web designer, photographer and videomaker.</h1>
-		<h1 class = 'subtitle'>Watch my blogs on the left, or my works on the top right!</h1>
 
-	</div>
+	<span class="glow"></span>
+	<span class="shadow"></span>
 
-	<div class='dustFrame'>
-		<div class = "dustCloser dust"></div>
-		<div class = "dustFar dust"></div>
-	</div>
 	<canvas id="Light"></canvas>
 	<canvas id="RopeDrawingArea">You need a internet browser that support html5 canvas…</canvas>
 	<script type="text/javascript" src="js/physic.js"></script>
@@ -206,47 +166,19 @@
 	<script type="text/javascript" src="js/ropeImpl.js"></script>
 	<script type="text/javascript" src="js/verletDemoBootStrapper.js"></script>
 	<script type="text/javascript">$
-	var titleShadow = $('.central2');
-	var central = $('.mainText');
-	var winW =  $(window).width();
+		var central = $('.mainText');
+		var winW =  $(window).width();
 
-	$('.lights').click(function(){
+		$('.lights').click(function(){
 			if(	ropeDemo.data.state == true){
-								ropeDemo.turnOff();
-								central.css({'left':'50%'});
-
+				ropeDemo.turnOff();
 			}else{
 				ropeDemo.waitLight();
 			}
-	});
-
-	
-
-		$("body").mousemove(function(e) {
-			// if(	ropeDemo.data.state == true){
-			// 	var degree = -((e.pageX-(winW/2))*65)/(winW/2);
-
-			// 	titleShadow.css({'transform': 'skew('+(-degree)+'deg,0deg) scaleY(.2)'});
-			// 	titleShadow.css({'left':(winW/2)+(degree*1.2)});
-
-			// 	// central.css({'left':winW/2+(degree*0.2)});
-			// }
-		})
+		});
 	</script>
-	<audio preload="auto" controls id="neonSound" class="resources">
-		<source src="neon.mp3" type="audio/mpeg">
-		<source src="neon.ogg" type="audio/ogg">
-
-	Your browser does not support the audio element.
-	</audio>
-	<audio preload="auto" controls id="creakSound" class="resources">
-		<source src="creak0.mp3" type="audio/mpeg">
-		<source src="creak0.ogg" type="audio/ogg">
-
-	Your browser does not support the audio element.
-	</audio>
-	<img class = "resources" id = 'lampOff'src="lamp0.png" width='0' height='0'>
-	<img class = "resources" id = 'lampOn' src="lamp1.png" width='0' height='0'>
+	<img class = "resources" id = 'lampOff'src="bulb-off.png" width='0' height='0'>
+	<img class = "resources" id = 'lampOn' src="bulb-on.png" width='0' height='0'>
 
 </body>
 </html>
